@@ -1,0 +1,88 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model WebASP.Models.User
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+<link rel="stylesheet" href="~/css/post.css">
+    <div class="login-page">
+        <form class="register-form" method="get">
+            <div class="form">
+                <img class="picture" src="@Html.DisplayFor(model => model.Picture)" />
+                <dl class="row">
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                    {
+                        <dt class="col-sm-5">
+                            @Html.DisplayNameFor(model => model.Id)
+                        </dt>
+                        <dd class="col-sm-5">
+                            @Html.DisplayFor(model => model.Id)
+                        </dd>
+                    }
+
+                    <dt class="col-sm-5">
+                        Электронная почта
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-5">
+                        Логин
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.Login)
+                    </dd>
+                    <dt class="col-sm-5">
+                        Пароль
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.Password)
+                    </dd>
+                    <dt class="col-sm-5">
+                        Фамилия
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.Surname)
+                    </dd>
+                    <dt class="col-sm-5">
+                        Имя
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-5">
+                        Отчество
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.middle_Name)
+                    </dd>
+                    <dt class="col-sm-5">
+                        Дата рождения
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.birth_day)
+                    </dd>
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                    {
+                        <dt class="col-sm-5">
+                            @Html.DisplayNameFor(model => model.Role)
+                        </dt>
+                        <dd class="col-sm-5">
+                            @Html.DisplayFor(model => model.Role)
+                        </dd>
+                        <dt class="col-sm-5">
+                            @Html.DisplayNameFor(model => model.Picture)
+                        </dt>
+                        <dd class="col-sm-5">
+                            @Html.DisplayFor(model => model.Picture)
+                        </dd>
+                    }
+                </dl>
+                <div class="link">
+                    @Html.ActionLink("Изменить данные", "Edit", new { id = Model.Id })
+                </div>
+                <button asp-action="Post">Новости</button>
+                <button asp-action="Exit">Выйти</button>
+            </div>
+        </form>
+    </div>

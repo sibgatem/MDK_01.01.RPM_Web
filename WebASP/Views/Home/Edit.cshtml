@@ -1,0 +1,37 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model WebASP.Models.User
+@{
+    ViewBag.Title = "Изменить пользователя";
+}
+<link rel="stylesheet" href="~/css/Registration.css">
+<form asp-controller="Home" enctype="multipart/form-data">
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form" asp-action="edit" asp-controller="home" enctype="multipart/form-data">
+                <input type="text" placeholder="Фамилия" asp-for="Surname" asp-validation-for="Surname" required pattern="^[а-яА-Я]*$" minlength="2" />
+                <input type="text" placeholder="Имя" asp-for="Name" asp-validation-for="Name" required pattern="^[а-яА-Я]*$" minlength="2" />
+                <input type="text" placeholder="Отчество" asp-for="middle_Name" asp-validation-for="middle_Name" pattern="^[а-яА-Я]*$" minlength="2" />
+                <input type="date" placeholder="Дата рождения" asp-for="birth_day" asp-validation-for="birth_day" autofocus required />
+                <input type="email" placeholder="Электронная почта" asp-for="Email" asp-validation-for="Email" required />
+                <input type="text" placeholder="Логин" asp-for="Login" asp-validation-for="Login" required minlength="6" maxlength="50" />
+                <input type="text" placeholder="Пароль" asp-for="Password" asp-validation-for="Password" autofocus required minlength="6" />
+                @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                {
+                    <input type="text" placeholder="Роль" asp-for="Role" />
+                }
+                <div class="post_pic" style="display:none;">
+                    <input type="text" placeholder="Изображение" asp-for="Picture" readonly />
+                </div>
+                <input type="file" placeholder="Аватар" name="file" accept="image/*" enctype="multipart/form-data" />
+                <label for="checkResp">Удалить изображение пользователя</label>
+                <input name="checkResp" value="true" type="checkbox" />
+                <div class="form-group">
+                    <input type="submit" value="Изменить" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</form>
+
+
+    

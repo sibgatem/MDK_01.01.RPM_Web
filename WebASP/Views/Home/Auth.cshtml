@@ -1,0 +1,23 @@
+﻿@model WebASP.Models.User
+@{
+    ViewBag.Title = "Авторизация";
+}
+
+<link rel="stylesheet" href="~/css/Registration.css">
+<form asp-controller="Home">
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" placeholder="Электронная почта" asp-for="Email" />
+                <input type="password" placeholder="Пароль" asp-for="Password" />
+                <hr/>
+                <button asp-action="Auth">Войти в аккаунт</button>
+
+                @*<button asp-action="Register">Зарегистрироваться</button>*@
+
+
+            </form>
+        </div>
+    </div>
+</form>
+

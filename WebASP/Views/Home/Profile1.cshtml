@@ -1,0 +1,25 @@
+﻿@*<tr>
+        @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+        {
+            <p>@item.id</p>
+        }
+    <p>@item.User.Login</p>
+        <h2>@item.Post_Date</h2>
+        <p>@item.Title</p>
+        <p>@item.Message</p>
+        @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+        {
+            <p>@item.Picture</p>
+        }
+        @if (@item.Picture != null)
+        {
+            <p><img src="@item.Picture" width="150" height="150" /></p>
+        }
+        <p>
+            @if (item.User.Login == HttpContextAccessor.HttpContext.Request.Cookies["login"])
+            {
+                <a asp-action="Delete_Post" asp-controller="home" asp-route-id="@item.id">X</a>
+                <a asp-action="Edit_Post" asp-controller="home" asp-route-id="@item.id">Изменить</a>
+            }
+        </p>
+    </tr>*@

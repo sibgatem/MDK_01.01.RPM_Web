@@ -1,0 +1,178 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model PostViewModel
+@{
+    ViewData["Title"] = "Все посты";
+}
+
+
+
+<link rel="stylesheet" href="~/css/post.css">
+
+        <div class="login-page">
+            <form class="register-form" method="get">
+                <div class="form">
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                    {
+                        <a asp-action="Index">Пользователи</a>
+                    }
+                    <button asp-action="Create_Post">Добавить пост</button>
+                    <button asp-action="Profile">Профиль</button>
+                    <button asp-action="Exit">Выйти</button>
+
+
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                    {
+                        <label class="control-lable">Id:</label>
+                        <input type="number" name="id" min="1" value="@Model.FilteViewModel.SelectId" class="form-control" />
+                        <label class="control-lable">User_id:</label>
+                        <input type="number" name="user_id" value="@Model.FilteViewModel.SelectUser_ID" class="form-control" />
+                        <label class="control-lable">Title:</label>
+                        <input type="text" name="title" value="@Model.FilteViewModel.SelectTitle" class="form-control" />
+                    }
+                    <input type="text" name="user" value="@Model.FilteViewModel.SelectUser" placeholder="Логин" class="form-control" />
+                    <button>Поиск</button>
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] != "True")
+                    {
+
+                        <a asp-action="post" asp-route-sortOrder="@Model.SortViewModel.Post_DateSort"
+                           asp-route-id="@(Model.FilteViewModel.SelectId)"
+                           asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                           asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                           asp-route-date="@(Model.FilteViewModel.SelectDate)"
+                           asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)">
+                            Сортировать по дате
+                        </a>
+                    }
+
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                    {
+                        <tr>
+
+                            <td>
+                                <a asp-action="post" asp-route-sortOrder="@Model.SortViewModel.IdSort"
+                                   asp-route-id="@(Model.FilteViewModel.SelectId)"
+                                   asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                                   asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                                   asp-route-date="@(Model.FilteViewModel.SelectDate)"
+                                   asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)">
+                                    Id
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-action="post" asp-route-sortOrder="@Model.SortViewModel.TitleSort"
+                                   asp-route-id="@(Model.FilteViewModel.SelectId)"
+                                   asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                                   asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                                   asp-route-date="@(Model.FilteViewModel.SelectDate)"
+                                   asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)">
+                                    Title
+                                </a>
+                            </td>
+                            @*<td>
+                                <asp-route-id ="@(Model.FilteViewModel.SelectId)"
+                                              asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                                              asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                                              asp-route-date="@(Model.FilteViewModel.SelectDate)"
+                                              asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)">
+                                    Message
+                                </asp-route-id>
+                            </td>*@
+                            
+
+                            <td>
+                                <a asp-action="post" asp-route-sortOrder="@Model.SortViewModel.Post_DateSort"
+                                   asp-route-id="@(Model.FilteViewModel.SelectId)"
+                                   asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                                   asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                                   asp-route-date="@(Model.FilteViewModel.SelectDate)"
+                                   asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)">
+                                    Post_date
+                                </a>
+
+                            </td>
+
+                            <td>
+                                <a asp-action="post" asp-route-sortOrder="@Model.SortViewModel.UserIDSort"
+                                   asp-route-id="@(Model.FilteViewModel.SelectId)"
+                                   asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                                   asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                                   asp-route-date="@(Model.FilteViewModel.SelectDate)">
+                                    User_id
+                                </a>
+                            </td>
+                            @*<td>
+                                <asp-route-id ="@(Model.FilteViewModel.SelectId)"
+                                              asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                                              asp-route-message="@(Model.FilteViewModel.SelectMessage)"
+                                              asp-route-date="@(Model.FilteViewModel.SelectDate)"
+                                              asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)">
+                                    Picture
+                                </asp-route-id>
+                            </td>*@
+                        </tr>
+                    }
+
+                    @foreach (var item in Model.Posts)
+                    {
+
+                        <h3><img src="@item.User.Picture" width="36" height="36" align="left" class="avatar">@item.User.Login</h3>
+                        <h5>@item.Post_Date</h5>
+                        <h2>@item.Title</h2>
+                        <p>@item.Message</p>
+                        @if (@item.Picture != null)
+                        {
+                            <img src="@item.Picture" class="picture">
+                        }
+
+                        @if (item.User.Login == HttpContextAccessor.HttpContext.Request.Cookies["login"])
+                        {
+                            <button asp-action="Delete_Post" asp-controller="home" asp-route-id="@item.id">Удалить</button>
+                            <button asp-action="Edit_Post" asp-controller="home" asp-route-id="@item.id">Изменить</button>
+                        }
+                        <hr />
+
+                        @*<form class="register-form">
+                <p>@item.User.Login</p>
+                <p>@item.Post_Date</p>
+                <p>@item.Title</p>
+                <p>@item.Message</p>
+                @if (@item.Picture != null)
+                {
+                    <p><img src="@item.Picture" width="150" height="150" /></p>
+                }
+                @if (item.User.Login == HttpContextAccessor.HttpContext.Request.Cookies["login"])
+                {
+                    <button asp-action="Delete_Post" asp-controller="home" asp-route-id="@item.id">X</button>
+                    <button asp-action="Edit_Post" asp-controller="home" asp-route-id="@item.id">Изменить</button>
+                }
+            </form>*@
+
+                    }
+
+
+                    @if (Model.PageViewModel.HasPreviousPage)
+                    {
+                        <a asp-action="Post"
+                           asp-route-page="@(Model.PageViewModel.PageNumber-1)"
+                           asp-route-id="@(Model.FilteViewModel.SelectId)"
+                           asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                           asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)"
+                           asp-route-pictureid="@(Model.FilteViewModel.SelectPicture)"
+                           asp-route-sortOrder="@(Model.SortViewModel.Current)"
+                           class="btn btn-outline-dark">Назад</a>
+                    }
+                    @if (Model.PageViewModel.HasNextPage)
+                    {
+                        <a asp-action="Post"
+                           asp-route-page="@(Model.PageViewModel.PageNumber+1)"
+                           asp-route-id="@(Model.FilteViewModel.SelectId)"
+                           asp-route-title="@(Model.FilteViewModel.SelectTitle)"
+                           asp-route-userid="@(Model.FilteViewModel.SelectUser_ID)"
+                           asp-route-pictureid="@(Model.FilteViewModel.SelectPicture)"
+                           asp-route-sortOrder="@(Model.SortViewModel.Current)"
+                           class="btn btn-outline-dark">Вперед</a>
+                    }
+</form>
+</div>
+</div>
+

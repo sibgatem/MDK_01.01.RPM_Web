@@ -1,0 +1,26 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model WebASP.Models.Post
+@{
+    ViewBag.Title = "Добавление поста";
+}
+<link rel="stylesheet" href="~/css/Registration.css">
+<form asp-controller="home" asp-action="Create_Post" enctype="multipart/form-data">
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" placeholder="Заголовок" asp-for="Title" />
+                <input type="text" placeholder="Сообщение" asp-for="Message" />
+                @if (HttpContextAccessor.HttpContext.Request.Cookies["role"] == "True")
+                {
+                    <input type="number" placeholder="Код пользователя" asp-for="User_ID" />
+                }
+                <input type="file" placeholder="Аватар" name="file" accept="image/*" enctype="multipart/form-data" />
+                <button>Добавить</button>
+            </form>
+        </div>
+    </div>
+
+</form>
+
+
+

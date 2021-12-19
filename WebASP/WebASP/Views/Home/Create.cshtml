@@ -1,0 +1,18 @@
+﻿@model WebASP.Models.User
+@{
+    ViewBag.Title = "Добавление пользователя";
+}
+<form asp-action="create" asp-controller="home" enctype="multipart/form-data">
+    <input type="text" placeholder="Фамилия" asp-for="Surname" asp-validation-for="Surname" required pattern="^[а-яА-Я]*$" minlength="2" />
+    <input type="text" placeholder="Имя" asp-for="Name" asp-validation-for="Name" required pattern="^[а-яА-Я]*$" minlength="2" />
+    <input type="text" placeholder="Отчество" asp-for="middle_Name" asp-validation-for="middle_Name" pattern="^[а-яА-Я]*$" minlength="2" />
+    <input type="date" placeholder="Дата рождения" asp-for="birth_day" asp-validation-for="birth_day" autofocus required />
+    <input type="email" placeholder="Электронная почта" asp-for="Email" asp-validation-for="Email" required />
+    <input type="text" placeholder="Логин" asp-for="Login" asp-validation-for="Login" required minlength="6" maxlength="50" />
+    <input type="text" placeholder="Пароль" asp-for="Password" asp-validation-for="Password" autofocus required minlength="6" />
+    <input type="text" placeholder="Роль" asp-for="Role" autofocus required />
+    <input type="file" placeholder="Аватар" name="file" accept="image/*" enctype="multipart/form-data" />
+    <div class="form-group">
+        <input type="submit" value="Добавить" class="btn btn-default" />
+    </div>
+</form>

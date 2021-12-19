@@ -1,0 +1,33 @@
+﻿@model WebASP.Models.Post
+@{
+    ViewBag.Title = "Удаление поста";
+}
+<div>
+    <dl class="dl-horizontal">
+        <dt>Title</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>Message</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+        <dt>Post date</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post_Date)
+        </dd>
+        <dt>User</dt>
+        <dd>
+            @Html.DisplayFor(model => model.User_ID)
+        </dd>
+        <dt>Picture</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Picture)
+        </dd>
+    </dl>
+</div>
+<form asp-action="delete_post" asp-controller="home" method="post">
+    <div class="form-group">
+        <input type="submit" value="Удалить" class="btn btn-default" />
+    </div>
+</form>
